@@ -7,7 +7,6 @@ var abstractClientTests = require('./abstract_client')
 var ports = require('./helpers/port_list')
 var serverBuilder = require('./server_helpers_for_client_tests').serverBuilder
 var mqtt = require('../')
-var xtend = require('xtend')
 var assert = require('assert')
 var port = 9999
 var httpServer = http.createServer()
@@ -90,8 +89,7 @@ describe('Websocket Client', function () {
   var baseConfig = { protocol: 'ws', port: port }
 
   function makeOptions (custom) {
-    // xtend returns a new object. Does not mutate arguments
-    return xtend(baseConfig, custom || {})
+    return {...baseConfig, ...custom}
   }
 
   it('should use mqtt as the protocol by default', function (done) {

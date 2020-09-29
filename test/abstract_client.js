@@ -6,7 +6,6 @@
 var should = require('chai').should
 var sinon = require('sinon')
 var mqtt = require('../')
-var xtend = require('xtend')
 var MqttServer = require('./server').MqttServer
 var Store = require('./../lib/store')
 var assert = require('chai').assert
@@ -16,7 +15,7 @@ module.exports = function (server, config) {
   var version = config.protocolVersion || 4
 
   function connect (opts) {
-    opts = xtend(config, opts)
+    opts = {...config, ...opts}
     return mqtt.connect(opts)
   }
 
