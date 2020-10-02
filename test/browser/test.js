@@ -1,11 +1,10 @@
 'use strict'
 
 var mqtt = require('../../lib/connect')
-var _URL = require('url')
-var parsed = _URL.parse(document.URL)
-var isHttps = parsed.protocol === 'https:'
-var port = parsed.port || (isHttps ? 443 : 80)
-var host = parsed.hostname
+var location = document.location
+var isHttps = location.protocol === 'https:'
+var port = location.port || (isHttps ? 443 : 80)
+var host = location.hostname
 var protocol = isHttps ? 'wss' : 'ws'
 
 function clientTests (buildClient) {
@@ -59,7 +58,7 @@ function suiteFactory (configName, opts) {
       })
     })
 
-    if (parsed.hostname === 'localhost') {
+    if (host === 'localhost') {
       describe('specifying a port', function () {
         clientTests(function () {
           return mqtt.connect(setVersion({ protocol: protocol, port: port }))
